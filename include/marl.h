@@ -1,9 +1,9 @@
 #ifndef MARL_H
 #define MARL_H
 
+//#include <stdio.h>
 #include <SDL2/SDL.h>
-
-void MARL_SayHello();
-void MARL_SayMeow();
+#include "marl_window.h"
+#include "marl_loop.h"
 
 #endif

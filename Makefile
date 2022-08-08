@@ -1,12 +1,17 @@
-SOURCE =  ./src/marl.c
-OBJECTS = ${SOURCE:.c=.o}
+SRC = ./src/marl.c ./src/visual/marl_window.c ./src/util/marl_loop.c
+OBJ =  $(SRC:.c=.o)
 
-all: libmarl
-	@echo "DONE"
+OUT = ./libmarl.a
 
-${OBJECTS}: src/%.o : src/%.c
-	$(CC) -c $< -I ./include -o $@
+INC = -I ./include
 
+default: $(OUT)
 
-libmarl: ${OBJECTS}
-	ar r $@.a ./src/*.o
+.c.o:
+	gcc $(INC) -c $< -o $@
+
+$(OUT): $(OBJ)
+	ar rcs $(OUT) $(OBJ)
+
+clean:
+	rm -f $(OBJ) $(OUT)

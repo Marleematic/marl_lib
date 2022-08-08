@@ -1,0 +1,14 @@
+SOURCES = ./src/marl.c \
+	  ./src/visual/marl_window.c
+OBJECTS = ${SOURCE:.c=.o}
+
+all: libmarl
+	@echo "DONE"
+
+${OBJECTS}: ./src/%.o: ./src/%.c
+	@echo "copiling " $@
+	$(CC) -c $< -I ./include -o $@
+
+
+libmarl: ${OBJECTS}
+	ar r $@.a ./src/*.o
