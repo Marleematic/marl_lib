@@ -2,7 +2,7 @@
 
 MARL_Loop *MARL_CreateLoop(unsigned int cap) {
 	MARL_Loop *loop = malloc(sizeof(MARL_Loop));
-	loop->nextRun = SDL_GetTicks64() + cap;
+	loop->nextRun = SDL_GetTicks64();
 	loop->cap = cap;
 	loop->iteration = 0;
 
@@ -10,18 +10,28 @@ MARL_Loop *MARL_CreateLoop(unsigned int cap) {
 }
 
 
-void MARL_LoopWait(MARL_Loop *loop, SDL_Event *event) {
+int MARL_LoopWait(MARL_Loop *loop, SDL_Event *event) {
 	
 	if(SDL_PollEvent(event)) {
-		return;
+		return 1;
 	}
 
-	if(loop->nextRun >= SDL_GetTicks64() && !SDL_PollEvent(event)) {
-		SDL_Delay(loop->nextRun - SDL_GetTicks64());
+//	printf("fps: %5f\n",1000.0f / (SDL_GetTicks64() - loop->nextRun));
+	int k = 0;
+	if(loop->nextRun + loop->cap > SDL_GetTicks64()) {
+	//	printf("start sleep: %i \n", loop->cap - SDL_GetTicks64() + loop->nextRun);
+		SDL_Delay((loop->nextRun+loop->cap)- SDL_GetTicks64());
+	} 
+	else {
+//		SDL_Delay(3);
+		k = 2;
 	}
-
-	loop->nextRun += loop->cap;
+	/*//	printf("p: %i\n", SDL_GetTicks64() - (loop->nextRun + loop->cap));
+		return 0;
+	}*/
+	loop->nextRun = SDL_GetTicks64();
 	loop->iteration++;
+	return k;
 }
 
 void MARL_LoopCatchUp(MARL_Loop *loop) {

@@ -9,7 +9,7 @@ MARL_Window *MARL_CreateWindow(const char *title, int x, int y, int w, int h) {
 		}
 	}
 	MARL_Window *win = malloc(sizeof(MARL_Window));
-	win->sdlWindow = SDL_CreateWindow(title, x, y, w, h, SDL_WINDOW_RESIZABLE);
+	win->sdlWindow = SDL_CreateWindow(title, x, y, w, h, SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
 	if(win->sdlWindow == NULL) {
 		SDL_Log("Failed to create SDL window: %s", SDL_GetError());

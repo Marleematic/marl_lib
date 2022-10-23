@@ -1,4 +1,5 @@
-SRC = ./src/marl.c ./src/visual/marl_window.c ./src/util/marl_loop.c
+LIB = ./glad/glad.c
+SRC = $(LIB) ./src/marl.c ./src/visual/marl_window.c ./src/util/marl_loop.c
 OBJ =  $(SRC:.c=.o)
 
 OUT = ./libmarl.a
